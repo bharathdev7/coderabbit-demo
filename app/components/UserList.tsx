@@ -1,6 +1,12 @@
 // src/app/components/UserList.tsx (The "Bad" Version for the PR)
 
-// Flaw 1: Using 'any' type instead of a specific type
+/**
+ * Fetches user data from the JSONPlaceholder users endpoint and returns the parsed JSON.
+ *
+ * Performs a GET request to 'https://jsonplaceholder.typicode.com/users' and resolves with the parsed response body (typically an array of user objects).
+ *
+ * @returns The parsed JSON response from the users endpoint (currently untyped).
+ */
 async function getUsers(): Promise<any> {
     const response = await fetch('https://jsonplaceholder.typicode.com/users');
     // Flaw 2: Not handling promise rejection or non-ok HTTP statuses
@@ -8,6 +14,15 @@ async function getUsers(): Promise<any> {
     return users;
 }
 
+/**
+ * Server-side React component that fetches and renders a list of users.
+ *
+ * Fetches user data via `getUsers()` and returns JSX that displays a header and either
+ * a list of users (name, email, and a profile link) or a "No users found." message when
+ * the fetched list is empty.
+ *
+ * @returns The rendered JSX for the user list.
+ */
 export default async function UserList() {
     const users = await getUsers();
     var componentTitle = "User List"; // Flaw 3: Using 'var' instead of 'const'
